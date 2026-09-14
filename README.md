@@ -4,7 +4,7 @@ Streamlit dashboard for the My Career project.
 
 ## Source of truth
 
-The dashboard reads job-tracking data directly from the native Google Sheet **Launchpad → Company Tracker**.
+The dashboard reads job-tracking data directly from the native Google Sheet **Chakori → Company Tracker**.
 
 Current tracked fields include:
 - Fit Score
@@ -31,6 +31,6 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Copy `.streamlit/secrets.toml.example` to `.streamlit/secrets.toml`, fill in the Google service-account values, and share the Launchpad spreadsheet with the service-account email as Viewer.
+Copy `.streamlit/secrets.toml.example` to `.streamlit/secrets.toml`, fill in the Google service-account values, and share the Chakori spreadsheet with the service-account email as Viewer.
 
 Do not commit `.streamlit/secrets.toml`.
