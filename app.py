@@ -6,7 +6,7 @@ from typing import Any
 import pandas as pd
 import streamlit as st
 
-from config import build_drive_client, LAUNCHPAD_SHEET_NAME, LAUNCHPAD_SPREADSHEET_ID
+from config import build_drive_client, CHAKORI_SHEET_NAME, CHAKORI_SPREADSHEET_ID
 
 st.set_page_config(page_title="Career Command Center", page_icon="🎯", layout="wide")
 
@@ -127,13 +127,13 @@ def calculate_attention(row: dict[str, Any]) -> tuple[int, str]:
 def load_jobs() -> tuple[list[dict[str, Any]], str]:
     client = build_drive_client()
     if client is None:
-        return [], "Launchpad unavailable: Streamlit secrets are not configured."
+        return [], "Chakori unavailable: Streamlit secrets are not configured."
     try:
-        values = client.read_sheet_values(LAUNCHPAD_SPREADSHEET_ID, LAUNCHPAD_SHEET_NAME)
+        values = client.read_sheet_values(CHAKORI_SPREADSHEET_ID, CHAKORI_SHEET_NAME)
     except Exception as exc:
-        return [], f"Launchpad read failed: {exc}"
+        return [], f"Chakori read failed: {exc}"
     if not values:
-        return [], "Launchpad returned no rows."
+        return [], "Chakori returned no rows."
 
     headers = [str(x).strip() for x in values[0]]
     jobs: list[dict[str, Any]] = []
@@ -157,7 +157,7 @@ def load_jobs() -> tuple[list[dict[str, Any]], str]:
         jobs.append(row)
 
     jobs.sort(key=lambda x: (-int(x.get("attention_score", 0)), -int(x.get("fit_score", 0))))
-    return jobs, f"Launchpad → {LAUNCHPAD_SHEET_NAME}"
+    return jobs, f"Chakori → {CHAKORI_SHEET_NAME}"
 
 
 jobs, source_label = load_jobs()
@@ -176,7 +176,7 @@ with st.sidebar:
     employer_types = sorted({str(j.get("employer_type", "")) for j in jobs if j.get("employer_type")})
     selected_types = st.multiselect("Employer type", employer_types, default=employer_types)
     page = st.radio("Navigate", ["Today", "Top Matches", "Pipeline"])
-    if st.button("Refresh Launchpad"):
+    if st.button("Refresh Chakori"):
         st.cache_data.clear()
         st.rerun()
 
@@ -239,4 +239,4 @@ else:
     ]
     visible = [c for c in ordered if c in df.columns]
     st.dataframe(df[visible], use_container_width=True, hide_index=True)
-    st.info("Launchpad is the only source of truth. Update connection/application fields in Launchpad; use Refresh Launchpad here to pull the latest values.")
+    st.info("Chakori is the only source of truth. Update connection/application fields in Chakori; use Refresh Chakori here to pull the latest values.")
