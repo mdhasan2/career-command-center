@@ -4,8 +4,8 @@ from typing import Any
 import streamlit as st
 from drive_client import DriveClient
 
-LAUNCHPAD_SPREADSHEET_ID = "1EHWvTharEba2L3dEeyN31MElWbaH-o83AcnNK7SD2ZA"
-LAUNCHPAD_SHEET_NAME = "Company Tracker"
+CHAKORI_SPREADSHEET_ID = "1EHWvTharEba2L3dEeyN31MElWbaH-o83AcnNK7SD2ZA"
+CHAKORI_SHEET_NAME = "Company Tracker"
 
 
 def _to_plain_dict(value: Any) -> dict[str, Any]:
